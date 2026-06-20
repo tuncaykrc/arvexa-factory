@@ -8,4 +8,4 @@ jobs:
       - name: Build
         run: |
           pip install --upgrade buildozer
-          buildozer android debug 
+          yes | buildozer android debug
