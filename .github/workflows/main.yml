@@ -1,0 +1,11 @@
+name: ARVEXA_Factory
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          pip install --upgrade buildozer
+          buildozer android debug 
