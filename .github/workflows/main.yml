@@ -7,16 +7,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: |
+          # 1. Sistemin güncel ama gerekli araçlarını kur
           sudo apt-get update
-          # libtinfo5 yerine libtinfo6 kullandık, Cython'u ekledik
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6 cython3
           
-          # Buildozer sürümünü sabitle
+          # 2. Buildozer'in kararlı sürümünü yükle (otomatik güncellemeyi engelle)
           pip install buildozer==1.5.0
           
-          # Lisansları kökten kabul et
+          # 3. Lisansları önceden kabul et
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
           
-          # İnşaatı başlat
+          # 4. Derlemeyi başlat
           buildozer --verbose android debug
