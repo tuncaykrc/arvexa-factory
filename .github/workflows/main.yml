@@ -1,26 +1,20 @@
-name: ARVEXA_Factory
+name: ARVEXA_Diagnostic
 on: [push]
 jobs:
-  build:
+  diagnose:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build
+      - name: Sistem Teşhisi
         run: |
-          # 1. Sistemi hazırlıyoruz
-          sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6 cython3
+          echo "--- 1. Yazılım Sürümleri ---"
+          java -version
+          python3 --version
           
-          # 2. Buildozer'i sabitliyoruz (Sürüm değişmesin diye)
-          pip install buildozer==1.5.0
+          echo "--- 2. Android SDK Durumu ---"
+          # SDK Manager nerede ve hangi sürüm?
+          sdkmanager --version
           
-          # 3. Android lisanslarını önceden "Evet" diyerek kabul ediyoruz
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
-          yes | sdkmanager --licenses || true
-          
-          # 4. Fabrikayı her seferinde sıfırdan kuruyoruz (Çöp kalmasın diye)
-          rm -rf ~/.buildozer
-          
-          # 5. APK üretimini başlatıyoruz
-          buildozer --verbose android debug
+          echo "--- 3. Kurulu Paketler ---"
+          # Sistem şu an hangi build-tools'u görüyor?
+          sdkmanager --list_installed
