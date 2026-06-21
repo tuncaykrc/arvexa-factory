@@ -10,5 +10,5 @@ jobs:
           pip install --upgrade buildozer
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6
-          # Lisansları tek seferde kabul et
-          buildozer android --accept-sdk-license debug
+          # Lisansları kabul et ve debug modunda derle
+          buildozer --verbose android debug
