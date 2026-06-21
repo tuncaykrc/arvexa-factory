@@ -14,12 +14,13 @@ jobs:
           # 2. Buildozer'i kararlı sürümde sabitle
           pip install buildozer==1.5.0
           
-          # 3. Lisansları önceden kabul et (kilitleri aç)
+          # 3. Lisansları zorla kabul et
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
+          yes | sdkmanager --licenses || true
           
           # 4. Eski hatalı kurulumları temizle
           rm -rf ~/.buildozer
           
-          # 5. Buildozer'i spec dosyanıza sadık kalmaya zorla
+          # 5. Derlemeyi başlat
           buildozer --verbose android debug
