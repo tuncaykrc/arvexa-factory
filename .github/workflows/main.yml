@@ -10,7 +10,6 @@ jobs:
           pip install --upgrade buildozer
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6
-          # Fabrikanın SDK'yı kurması için gerekli izinleri veriyoruz
-          export ANDROIDSDK=$HOME/.buildozer/android/platform/android-sdk
-          export PATH=$PATH:$ANDROIDSDK/cmdline-tools/latest/bin
-          buildozer --verbose android debug
+          # Lisansları kesin kabul et
+          mkdir -p ~/.android
+          echo "y" | buildozer android debug
