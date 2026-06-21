@@ -1,20 +1,36 @@
-name: ARVEXA_Diagnostic
+name: ARVEXA_Factory_Final
 on: [push]
 jobs:
-  diagnose:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Sistem Teşhisi
+      
+      - name: 1. Gerekli Araçları ve SDK'yı Kur
         run: |
-          echo "--- 1. Yazılım Sürümleri ---"
-          java -version
-          python3 --version
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk unzip
           
-          echo "--- 2. Android SDK Durumu ---"
-          # SDK Manager nerede ve hangi sürüm?
-          sdkmanager --version
+          # Android SDK'yı manuel indir ve kur
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+          mkdir -p ~/android-sdk/cmdline-tools
+          unzip cmdline-tools.zip -d ~/android-sdk/cmdline-tools
+          mv ~/android-sdk/cmdline-tools/cmdline-tools ~/android-sdk/cmdline-tools/latest
           
-          echo "--- 3. Kurulu Paketler ---"
-          # Sistem şu an hangi build-tools'u görüyor?
-          sdkmanager --list_installed
+          # SDK Yollarını ekle
+          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          
+      - name: 2. Lisansları Onayla ve Paketi İndir
+        run: |
+          # SDK yolunu kullanarak lisansları kabul et
+          yes | ~/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+          # Gerekli API 31 ve Build-Tools 31.0.0 paketlerini kur
+          ~/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-31" "build-tools;31.0.0"
+          
+      - name: 3. Buildozer ile Derle
+        run: |
+          pip install buildozer==1.5.0
+          # Buildozer'in kurduğumuz SDK'yı kullanmasını sağla
+          export ANDROID_HOME=$HOME/android-sdk
+          buildozer --verbose android debug
