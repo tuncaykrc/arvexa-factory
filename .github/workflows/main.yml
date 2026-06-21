@@ -8,13 +8,13 @@ jobs:
       - name: Build
         run: |
           sudo apt-get update
-          # Cython3, fabrikanın Python kodunu derlemesi için şarttır
+          # libtinfo5 yerine libtinfo6 kullandık, Cython'u ekledik
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6 cython3
           
-          # Buildozer sürümünü kararlı olan 1.5.0'a sabitle
+          # Buildozer sürümünü sabitle
           pip install buildozer==1.5.0
           
-          # Lisansları kökten kabul eden yapılandırma
+          # Lisansları kökten kabul et
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
           
