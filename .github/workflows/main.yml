@@ -8,15 +8,15 @@ jobs:
       - name: Build
         run: |
           sudo apt-get update
-          # Gerekli tüm araçlar ve Cython3 tek satırda
+          # Cython3, fabrikanın Python kodunu derlemesi için şarttır
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev libtinfo6 cython3
           
-          # Buildozer sürümünü sabitle
+          # Buildozer sürümünü kararlı olan 1.5.0'a sabitle
           pip install buildozer==1.5.0
           
-          # Lisansları kökten kabul et
+          # Lisansları kökten kabul eden yapılandırma
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
           
-          # Buildozer'i çalıştır
+          # İnşaatı başlat
           buildozer --verbose android debug
